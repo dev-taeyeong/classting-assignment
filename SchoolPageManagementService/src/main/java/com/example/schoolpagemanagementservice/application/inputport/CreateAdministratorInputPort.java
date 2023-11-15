@@ -17,6 +17,7 @@ public class CreateAdministratorInputPort implements CreateAdministratorUseCase 
     @Override
     public AdministratorDto createAdministrator(CreateAdministratorCommand command) {
         Administrator administrator = Administrator.createAdministrator(command.name());
-        return AdministratorDto.fromDomainModel(administrator);
+        Administrator savedAdministrator = createAdministratorOutputPort.save(administrator);
+        return AdministratorDto.fromDomainModel(savedAdministrator);
     }
 }
