@@ -1,4 +1,4 @@
-package com.example.schoolpagemanagementservice.application.inputport;
+package com.example.schoolpagemanagementservice.application.in;
 
 import com.example.schoolpagemanagementservice.domain.model.Administrator;
 
