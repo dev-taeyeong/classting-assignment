@@ -1,6 +1,6 @@
-package com.example.schoolpagemanagementservice.application.inputport;
+package com.example.schoolpagemanagementservice.application.in;
 
-import com.example.schoolpagemanagementservice.application.outputport.CreateAdministratorOutputPort;
+import com.example.schoolpagemanagementservice.application.out.CreateAdministratorOutputPort;
 import com.example.schoolpagemanagementservice.application.usecase.CreateAdministratorUseCase;
 import com.example.schoolpagemanagementservice.domain.model.Administrator;
 import lombok.RequiredArgsConstructor;

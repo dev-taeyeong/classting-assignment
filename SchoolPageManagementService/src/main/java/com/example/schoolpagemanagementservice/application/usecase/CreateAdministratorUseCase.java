@@ -1,7 +1,7 @@
 package com.example.schoolpagemanagementservice.application.usecase;
 
-import com.example.schoolpagemanagementservice.application.inputport.AdministratorDto;
-import com.example.schoolpagemanagementservice.application.inputport.CreateAdministratorCommand;
+import com.example.schoolpagemanagementservice.application.in.AdministratorDto;
+import com.example.schoolpagemanagementservice.application.in.CreateAdministratorCommand;
 
 public interface CreateAdministratorUseCase {
 

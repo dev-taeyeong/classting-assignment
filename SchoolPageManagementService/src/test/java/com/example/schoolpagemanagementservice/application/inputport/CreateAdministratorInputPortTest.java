@@ -1,6 +1,8 @@
 package com.example.schoolpagemanagementservice.application.inputport;
 
-import com.example.schoolpagemanagementservice.application.outputport.CreateAdministratorOutputPort;
+import com.example.schoolpagemanagementservice.application.in.CreateAdministratorCommand;
+import com.example.schoolpagemanagementservice.application.in.CreateAdministratorInputPort;
+import com.example.schoolpagemanagementservice.application.out.CreateAdministratorOutputPort;
 import com.example.schoolpagemanagementservice.domain.model.Administrator;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

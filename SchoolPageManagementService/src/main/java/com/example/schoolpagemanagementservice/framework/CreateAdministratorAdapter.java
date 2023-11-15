@@ -1,8 +1,8 @@
 package com.example.schoolpagemanagementservice.framework;
 
-import com.example.schoolpagemanagementservice.application.outputport.CreateAdministratorOutputPort;
+import com.example.schoolpagemanagementservice.application.out.CreateAdministratorOutputPort;
 import com.example.schoolpagemanagementservice.domain.model.Administrator;
-import com.example.schoolpagemanagementservice.framework.jpa.AdministratorJpaRepository;
+import com.example.schoolpagemanagementservice.framework.out.jpa.AdministratorJpaRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
