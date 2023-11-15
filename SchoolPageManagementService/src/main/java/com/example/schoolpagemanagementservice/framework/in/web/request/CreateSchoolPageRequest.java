@@ -1,4 +1,4 @@
-package com.example.schoolpagemanagementservice.framework.in.web;
+package com.example.schoolpagemanagementservice.framework.in.web.request;
 
 import com.example.schoolpagemanagementservice.application.in.dto.CreateSchoolPageCommand;
 

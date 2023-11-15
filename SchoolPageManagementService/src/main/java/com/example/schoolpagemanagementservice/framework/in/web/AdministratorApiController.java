@@ -2,6 +2,7 @@ package com.example.schoolpagemanagementservice.framework.in.web;
 
 import com.example.schoolpagemanagementservice.application.in.dto.AdministratorDto;
 import com.example.schoolpagemanagementservice.application.usecase.CreateAdministratorUseCase;
+import com.example.schoolpagemanagementservice.framework.in.web.request.CreateAdministratorRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
