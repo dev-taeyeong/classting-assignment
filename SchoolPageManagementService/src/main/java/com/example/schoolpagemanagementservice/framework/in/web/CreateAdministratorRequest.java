@@ -1,6 +1,6 @@
 package com.example.schoolpagemanagementservice.framework.in.web;
 
-import com.example.schoolpagemanagementservice.application.in.CreateAdministratorCommand;
+import com.example.schoolpagemanagementservice.application.in.dto.CreateAdministratorCommand;
 
 public record CreateAdministratorRequest(
 

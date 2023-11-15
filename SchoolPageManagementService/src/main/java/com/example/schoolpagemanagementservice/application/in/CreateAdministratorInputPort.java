@@ -1,5 +1,7 @@
 package com.example.schoolpagemanagementservice.application.in;
 
+import com.example.schoolpagemanagementservice.application.in.dto.AdministratorDto;
+import com.example.schoolpagemanagementservice.application.in.dto.CreateAdministratorCommand;
 import com.example.schoolpagemanagementservice.application.out.CreateAdministratorOutputPort;
 import com.example.schoolpagemanagementservice.application.usecase.CreateAdministratorUseCase;
 import com.example.schoolpagemanagementservice.domain.model.Administrator;

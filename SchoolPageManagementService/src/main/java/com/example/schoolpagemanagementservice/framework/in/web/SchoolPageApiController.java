@@ -1,6 +1,6 @@
 package com.example.schoolpagemanagementservice.framework.in.web;
 
-import com.example.schoolpagemanagementservice.application.in.SchoolPageDto;
+import com.example.schoolpagemanagementservice.application.in.dto.SchoolPageDto;
 import com.example.schoolpagemanagementservice.application.usecase.CreateSchoolPageUseCase;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RequiredArgsConstructor
-@RequestMapping("/api/v1/school-page")
+@RequestMapping("/api/v1/school-pages")
 @RestController
 public class SchoolPageApiController {
 

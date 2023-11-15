@@ -1,6 +1,6 @@
 package com.example.schoolpagemanagementservice.framework.in.web;
 
-import com.example.schoolpagemanagementservice.application.in.AdministratorDto;
+import com.example.schoolpagemanagementservice.application.in.dto.AdministratorDto;
 import com.example.schoolpagemanagementservice.application.usecase.CreateAdministratorUseCase;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

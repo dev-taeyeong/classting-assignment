@@ -1,5 +1,7 @@
 package com.example.schoolpagemanagementservice.application.in;
 
+import com.example.schoolpagemanagementservice.application.in.dto.CreateSchoolPageCommand;
+import com.example.schoolpagemanagementservice.application.in.dto.SchoolPageDto;
 import com.example.schoolpagemanagementservice.application.out.CreateSchoolPageOutputPort;
 import com.example.schoolpagemanagementservice.domain.model.SchoolPage;
 import org.junit.jupiter.api.Test;

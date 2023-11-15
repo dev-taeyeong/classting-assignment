@@ -1,4 +1,4 @@
-package com.example.schoolpagemanagementservice.application.in;
+package com.example.schoolpagemanagementservice.application.in.dto;
 
 import com.example.schoolpagemanagementservice.domain.model.Administrator;
 

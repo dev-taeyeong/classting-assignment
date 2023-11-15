@@ -1,6 +1,6 @@
 package com.example.schoolpagemanagementservice.framework.in.web;
 
-import com.example.schoolpagemanagementservice.application.in.CreateSchoolPageCommand;
+import com.example.schoolpagemanagementservice.application.in.dto.CreateSchoolPageCommand;
 
 public record CreateSchoolPageRequest(
 
