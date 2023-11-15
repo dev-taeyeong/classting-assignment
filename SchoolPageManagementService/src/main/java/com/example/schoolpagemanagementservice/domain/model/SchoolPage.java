@@ -17,20 +17,24 @@ public class SchoolPage {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "administrator_id", nullable = false)
+    private long administratorId;
+
     @Column(name = "location", length = 100, nullable = false)
     private String location;
 
     @Column(name = "name", length = 100, nullable = false)
     private String name;
 
-    private SchoolPage(Long id, String location, String name) {
-        validateInput(id, location, name);
+    private SchoolPage(Long id, long administratorId, String location, String name) {
+        validateInput(id, administratorId, location, name);
         this.id = id;
+        this.administratorId = administratorId;
         this.location = location;
         this.name = name;
     }
 
-    private void validateInput(Long id, String location, String name) {
+    private void validateInput(Long id, long administratorId, String location, String name) {
         if (location == null || location.isBlank()) {
             throw new IllegalArgumentException("잘못된 지역입니다.");
         }
@@ -39,8 +43,8 @@ public class SchoolPage {
         }
     }
 
-    public static SchoolPage createSchoolPage(String location, String name) {
-        return new SchoolPage(null, location, name);
+    public static SchoolPage createSchoolPage(long administratorId, String location, String name) {
+        return new SchoolPage(null, administratorId, location, name);
     }
 
     @Override
@@ -60,6 +64,7 @@ public class SchoolPage {
     public String toString() {
         return "SchoolPage{" +
                "id=" + id +
+               ", administratorId=" + administratorId +
                ", location='" + location + '\'' +
                ", name='" + name + '\'' +
                '}';
