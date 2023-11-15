@@ -26,7 +26,7 @@ public class SchoolPage {
     @Column(name = "name", length = 100, nullable = false)
     private String name;
 
-    private SchoolPage(Long id, long administratorId, String location, String name) {
+    public SchoolPage(Long id, long administratorId, String location, String name) {
         validateInput(id, administratorId, location, name);
         this.id = id;
         this.administratorId = administratorId;
