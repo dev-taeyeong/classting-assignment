@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -19,7 +20,7 @@ public class Administrator {
     @Column(name = "name")
     private String name;
 
-    private Administrator(Long id, String name) {
+    public Administrator(Long id, String name) {
         validateInput(id, name);
         this.id = id;
         this.name = name;
@@ -33,5 +34,26 @@ public class Administrator {
 
     public static Administrator createAdministrator(String name) {
         return new Administrator(null, name);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Administrator that = (Administrator) o;
+        return Objects.equals(id, that.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
+
+    @Override
+    public String toString() {
+        return "Administrator{" +
+               "id=" + id +
+               ", name='" + name + '\'' +
+               '}';
     }
 }

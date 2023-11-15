@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -40,5 +41,27 @@ public class SchoolPage {
 
     public static SchoolPage createSchoolPage(String location, String name) {
         return new SchoolPage(null, location, name);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        SchoolPage that = (SchoolPage) o;
+        return Objects.equals(id, that.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
+
+    @Override
+    public String toString() {
+        return "SchoolPage{" +
+               "id=" + id +
+               ", location='" + location + '\'' +
+               ", name='" + name + '\'' +
+               '}';
     }
 }
