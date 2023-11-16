@@ -4,7 +4,7 @@ import com.example.schoolpagemanagementservice.domain.model.Administrator;
 
 public record AdministratorDto(
 
-        long id,
+        Long id,
         String name
 ) {
 

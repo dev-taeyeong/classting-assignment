@@ -20,7 +20,7 @@ public class Administrator {
     @Column(name = "name")
     private String name;
 
-    public Administrator(Long id, String name) {
+    private Administrator(Long id, String name) {
         validateInput(id, name);
         this.id = id;
         this.name = name;

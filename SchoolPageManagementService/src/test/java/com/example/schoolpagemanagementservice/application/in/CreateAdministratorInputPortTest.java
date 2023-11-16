@@ -27,17 +27,15 @@ class CreateAdministratorInputPortTest {
     @Test
     void createAdministratorTest() {
         // given
-        long administratorId = 1L;
-        String name = "test administrator";
-        CreateAdministratorCommand command = new CreateAdministratorCommand(name);
-        Administrator administrator = new Administrator(administratorId, name);
-        given(createAdministratorOutputPort.save(any())).willReturn(administrator);
+        CreateAdministratorCommand command = new CreateAdministratorCommand("test name");
+        Administrator administrator = Administrator.createAdministrator(command.name());
+        given(createAdministratorOutputPort.save(any(Administrator.class))).willReturn(administrator);
 
         // when
         AdministratorDto result = sut.createAdministrator(command);
 
         // then
-        assertThat(result).isEqualTo(new AdministratorDto(administratorId, name));
+        assertThat(result.name()).isEqualTo(command.name());
         then(createAdministratorOutputPort).should().save(any());
     }
 }
