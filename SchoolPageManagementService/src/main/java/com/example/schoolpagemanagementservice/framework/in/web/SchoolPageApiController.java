@@ -7,6 +7,7 @@ import com.example.schoolpagemanagementservice.framework.in.web.request.CreateSc
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,7 +29,7 @@ public class SchoolPageApiController {
 
     @GetMapping
     public ResponseEntity<Page<SchoolPageDto>> getAllSchoolPages(
-            @PageableDefault(page = 0, size = 20, sort = "id") Pageable pageable) {
+            @PageableDefault(page = 0, size = 20, sort = "id", direction = Sort.Direction.DESC) Pageable pageable) {
         return ResponseEntity.ok(getAllSchoolPagesUseCase.getSchoolPages(pageable));
     }
 }

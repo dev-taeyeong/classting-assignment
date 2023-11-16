@@ -20,7 +20,7 @@ public class NewsPost {
     private String title;
     private String content;
 
-    public NewsPost(String id, long schoolPageId, String title, String content) {
+    private NewsPost(String id, long schoolPageId, String title, String content) {
         this.id = id;
         this.schoolPageId = schoolPageId;
         this.title = title;
