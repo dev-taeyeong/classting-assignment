@@ -1,10 +1,13 @@
 package com.example.schoolnewspublishingservice.framework.in.web;
 
 import com.example.schoolnewspublishingservice.application.in.dto.NewsPostDto;
+import com.example.schoolnewspublishingservice.application.in.dto.UpdateNewsPostCommand;
 import com.example.schoolnewspublishingservice.application.usecase.CreateNewsPostUseCase;
 import com.example.schoolnewspublishingservice.application.usecase.GetAllNewsPostsUseCase;
 import com.example.schoolnewspublishingservice.application.usecase.GetNewsPostsByIdsUseCase;
+import com.example.schoolnewspublishingservice.application.usecase.UpdateNewsPostUseCase;
 import com.example.schoolnewspublishingservice.framework.in.web.request.CreateNewsPostRequest;
+import com.example.schoolnewspublishingservice.framework.in.web.request.UpdateNewsPostRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -24,6 +27,7 @@ public class NewsPostApiController {
     private final CreateNewsPostUseCase createNewsPostUseCase;
     private final GetAllNewsPostsUseCase getAllNewsPostsUseCase;
     private final GetNewsPostsByIdsUseCase getNewsPostsByIdsUseCase;
+    private final UpdateNewsPostUseCase updateNewsPostUseCase;
 
     @PostMapping
     public ResponseEntity<NewsPostDto> createNewsPost(@RequestBody CreateNewsPostRequest request) {
@@ -42,5 +46,15 @@ public class NewsPostApiController {
     public ResponseEntity<List<NewsPostDto>> getNewsPostsByIds(@RequestParam List<String> newsPostIds) {
         List<NewsPostDto> newsPostDtos = getNewsPostsByIdsUseCase.getNewsPostsByIds(newsPostIds);
         return ResponseEntity.ok(newsPostDtos);
+    }
+
+    @PutMapping("/{newsPostId}")
+    public ResponseEntity<NewsPostDto> updateNewsPost(@PathVariable String newsPostId, @RequestBody UpdateNewsPostRequest request) {
+        NewsPostDto newsPostDto = updateNewsPostUseCase.updateNewsPost(new UpdateNewsPostCommand(
+                newsPostId,
+                request.administratorId(),
+                request.newTitle(),
+                request.newContent()));
+        return ResponseEntity.ok(newsPostDto);
     }
 }

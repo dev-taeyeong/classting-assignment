@@ -23,6 +23,7 @@ public class NewsPost {
     private String content;
 
     private NewsPost(String id, long schoolPageId, String title, String content) {
+        validateInput(title, content);
         this.id = id;
         this.schoolPageId = schoolPageId;
         this.title = title;
@@ -31,6 +32,21 @@ public class NewsPost {
 
     public static NewsPost createNewsPost(long schoolPageId, String title, String content) {
         return new NewsPost(null, schoolPageId, title, content);
+    }
+
+    public void update(String newTitle, String newContent) {
+        validateInput(newTitle, newContent);
+        title = newTitle;
+        content = newContent;
+    }
+
+    private void validateInput(String title, String content) {
+        if (title == null || title.isBlank()) {
+            throw new IllegalArgumentException("잘못된 입력입니다.");
+        }
+        if (content == null || content.isBlank()) {
+            throw new IllegalArgumentException("잘못된 입력입니다.");
+        }
     }
 
     @Override
@@ -51,8 +67,8 @@ public class NewsPost {
         return "NewsPost{" +
                "id='" + id + '\'' +
                ", schoolPageId=" + schoolPageId +
-               ", title='" + title + '\'' +
-               ", content='" + content + '\'' +
+               ", newTitle='" + title + '\'' +
+               ", newContent='" + content + '\'' +
                '}';
     }
 }
