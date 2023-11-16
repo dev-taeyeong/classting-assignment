@@ -22,8 +22,8 @@ public class CreateSchoolPageInputPort implements CreateSchoolPageUseCase {
     public SchoolPageDto createSchoolPage(CreateSchoolPageCommand command) {
         validateAdministratorExists(command.administratorId());
         SchoolPage schoolPage = SchoolPage.createSchoolPage(command.administratorId(), command.location(), command.name());
-        SchoolPage savedSchoolPage = createSchoolPageOutputPort.save(schoolPage);
-        return SchoolPageDto.fromDomainModel(savedSchoolPage);
+        createSchoolPageOutputPort.save(schoolPage);
+        return SchoolPageDto.fromDomainModel(schoolPage);
     }
 
     private void validateAdministratorExists(long administratorId) {

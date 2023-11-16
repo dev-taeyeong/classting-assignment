@@ -4,8 +4,8 @@ import com.example.schoolpagemanagementservice.domain.model.SchoolPage;
 
 public record SchoolPageDto(
 
-        long id,
-        long administratorId,
+        Long id,
+        Long administratorId,
         String location,
         String name
 ) {
