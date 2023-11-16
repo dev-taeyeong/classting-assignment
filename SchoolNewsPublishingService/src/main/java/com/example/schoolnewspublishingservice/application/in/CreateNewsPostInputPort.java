@@ -19,7 +19,7 @@ public class CreateNewsPostInputPort implements CreateNewsPostUseCase {
     @Override
     public NewsPostDto createNewsPost(CreateNewsPostCommand command) {
         NewsPost newsPost = NewsPost.createNewsPost(command.schoolPageId(), command.title(), command.content());
-        NewsPost savedNewsPost = createNewsPostOutputPort.save(newsPost);
-        return NewsPostDto.fromDomainModel(savedNewsPost);
+        createNewsPostOutputPort.save(newsPost);
+        return NewsPostDto.fromDomainModel(newsPost);
     }
 }
