@@ -1,9 +1,10 @@
 package com.example.studentsubscriptionservice.framework.in.web;
 
 import com.example.studentsubscriptionservice.application.in.dto.StudentDto;
+import com.example.studentsubscriptionservice.application.in.dto.SubscriptionDto;
 import com.example.studentsubscriptionservice.application.usecase.CreateStudentUseCase;
 import com.example.studentsubscriptionservice.application.usecase.GetAllStudentsUseCase;
-import com.example.studentsubscriptionservice.application.usecase.SubscribeSchoolPageUseCase;
+import com.example.studentsubscriptionservice.application.usecase.GetAllSubscriptionsByStudentIdUseCase;
 import com.example.studentsubscriptionservice.framework.in.web.request.CreateStudentRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -13,6 +14,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/students")
 @RestController
@@ -20,7 +23,7 @@ public class StudentApiController {
 
     private final CreateStudentUseCase createStudentUseCase;
     private final GetAllStudentsUseCase getAllStudentsUseCase;
-    private final SubscribeSchoolPageUseCase subscribeSchoolPageUseCase;
+    private final GetAllSubscriptionsByStudentIdUseCase getAllSubscriptionsByStudentIdUseCase;
 
     /**
      * 학생 생성
@@ -45,5 +48,20 @@ public class StudentApiController {
             @PageableDefault(page = 0, size = 20, sort = "id") Pageable pageable) {
         Page<StudentDto> studentDtos = getAllStudentsUseCase.getAllStudents(pageable);
         return ResponseEntity.ok(studentDtos);
+    }
+
+    /**
+     * 학생의 구독 목록 조회
+     *
+     * @param studentId 학생 ID
+     * @return SubscriptionDto list
+     */
+    @GetMapping("/{studentId}/subscriptions")
+    public ResponseEntity<List<SubscriptionDto>> getAllSubscriptionsByStudentId(
+            @PathVariable Long studentId
+    ) {
+        List<SubscriptionDto> subscriptionDtos =
+                getAllSubscriptionsByStudentIdUseCase.getAllSubscriptionsByStudentId(studentId);
+        return ResponseEntity.ok(subscriptionDtos);
     }
 }
