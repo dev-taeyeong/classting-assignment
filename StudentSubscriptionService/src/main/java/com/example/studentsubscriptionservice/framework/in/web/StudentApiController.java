@@ -1,13 +1,10 @@
 package com.example.studentsubscriptionservice.framework.in.web;
 
-import com.example.studentsubscriptionservice.application.in.command.SubscribeSchoolPageCommand;
 import com.example.studentsubscriptionservice.application.in.dto.StudentDto;
-import com.example.studentsubscriptionservice.application.in.dto.SubscriptionDto;
 import com.example.studentsubscriptionservice.application.usecase.CreateStudentUseCase;
 import com.example.studentsubscriptionservice.application.usecase.GetAllStudentsUseCase;
 import com.example.studentsubscriptionservice.application.usecase.SubscribeSchoolPageUseCase;
 import com.example.studentsubscriptionservice.framework.in.web.request.CreateStudentRequest;
-import com.example.studentsubscriptionservice.framework.in.web.request.SubscribeSchoolPageRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -37,26 +34,16 @@ public class StudentApiController {
         return ResponseEntity.status(HttpStatus.CREATED).body(studentDto);
     }
 
+    /**
+     * 모든 학생 목록 조회
+     *
+     * @param pageable 페이징 조회를 위한 request
+     * @return StudentDto Page 객체
+     */
     @GetMapping
     public ResponseEntity<Page<StudentDto>> getAllStudents(
             @PageableDefault(page = 0, size = 20, sort = "id") Pageable pageable) {
         Page<StudentDto> studentDtos = getAllStudentsUseCase.getAllStudents(pageable);
         return ResponseEntity.ok(studentDtos);
-    }
-
-    /**
-     * 학교 페이지 구독
-     *
-     * @param studentId 학생 ID
-     * @param request
-     * @return SubscriptionDto
-     */
-    @PostMapping("/{studentId}")
-    public ResponseEntity<SubscriptionDto> subscribeSchoolPage(
-            @PathVariable Long studentId, @RequestBody SubscribeSchoolPageRequest request) {
-        SubscribeSchoolPageCommand command = new SubscribeSchoolPageCommand(studentId, request.schoolPageId());
-        SubscriptionDto subscriptionDto = subscribeSchoolPageUseCase.subscribeSchoolPage(command);
-
-        return ResponseEntity.status(HttpStatus.CREATED).body(subscriptionDto);
     }
 }
