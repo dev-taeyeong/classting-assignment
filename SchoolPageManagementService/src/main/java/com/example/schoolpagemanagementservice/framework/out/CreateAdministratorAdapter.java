@@ -1,4 +1,4 @@
-package com.example.schoolpagemanagementservice.framework;
+package com.example.schoolpagemanagementservice.framework.out;
 
 import com.example.schoolpagemanagementservice.application.out.CreateAdministratorOutputPort;
 import com.example.schoolpagemanagementservice.domain.model.Administrator;
