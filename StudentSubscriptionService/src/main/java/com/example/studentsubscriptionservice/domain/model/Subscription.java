@@ -10,7 +10,9 @@ import javax.persistence.*;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(
         name = "subscriptions",
-        indexes = {@Index(columnList = "student_id")}
+        uniqueConstraints = {
+                @UniqueConstraint(columnNames = {"student_id", "school_page_id"})
+        }
 )
 @Entity
 public class Subscription {
