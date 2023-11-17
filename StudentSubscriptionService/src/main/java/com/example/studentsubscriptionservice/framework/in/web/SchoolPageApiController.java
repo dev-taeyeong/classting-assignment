@@ -6,7 +6,6 @@ import com.example.studentsubscriptionservice.application.in.dto.SubscriptionDto
 import com.example.studentsubscriptionservice.application.usecase.SubscribeSchoolPageUseCase;
 import com.example.studentsubscriptionservice.application.usecase.UnsubscribeSchoolPageUseCase;
 import com.example.studentsubscriptionservice.framework.in.web.request.SubscribeSchoolPageRequest;
-import com.example.studentsubscriptionservice.framework.in.web.request.UnSubscribeSchoolPageRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -41,14 +40,14 @@ public class SchoolPageApiController {
      * 학교 페이지 구독 취소
      *
      * @param schoolPageId 학교 페이지 ID
-     * @param request
+     * @param studentId 학생 ID
      * @return void
      */
     @DeleteMapping("/{schoolPageId}/subscriptions")
     public ResponseEntity<Void> unsubscribeSchoolPage(
-            @PathVariable Long schoolPageId, @RequestBody UnSubscribeSchoolPageRequest request
+            @PathVariable Long schoolPageId, @RequestParam Long studentId
     ) {
-        UnsubscribeSchoolPageCommand command = new UnsubscribeSchoolPageCommand(request.studentId(), schoolPageId);
+        UnsubscribeSchoolPageCommand command = new UnsubscribeSchoolPageCommand(studentId, schoolPageId);
         unsubscribeSchoolPageUseCase.unsubscribeSchoolPage(command);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);
     }
