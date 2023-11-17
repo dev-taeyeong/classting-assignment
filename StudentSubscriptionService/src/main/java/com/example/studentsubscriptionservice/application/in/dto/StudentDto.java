@@ -1,4 +1,4 @@
-package com.example.studentsubscriptionservice.application.in;
+package com.example.studentsubscriptionservice.application.in.dto;
 
 import com.example.studentsubscriptionservice.domain.model.Student;
 

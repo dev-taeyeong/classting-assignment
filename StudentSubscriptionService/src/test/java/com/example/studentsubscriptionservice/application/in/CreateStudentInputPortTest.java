@@ -1,5 +1,7 @@
 package com.example.studentsubscriptionservice.application.in;
 
+import com.example.studentsubscriptionservice.application.in.command.CreateStudentCommand;
+import com.example.studentsubscriptionservice.application.in.dto.StudentDto;
 import com.example.studentsubscriptionservice.application.out.CreateStudentOutputPort;
 import com.example.studentsubscriptionservice.domain.model.Student;
 import org.junit.jupiter.api.Test;
