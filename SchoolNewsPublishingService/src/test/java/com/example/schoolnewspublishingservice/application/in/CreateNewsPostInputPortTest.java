@@ -4,6 +4,7 @@ import com.example.schoolnewspublishingservice.application.in.dto.CreateNewsPost
 import com.example.schoolnewspublishingservice.application.in.dto.NewsPostDto;
 import com.example.schoolnewspublishingservice.application.out.CreateNewsPostOutputPort;
 import com.example.schoolnewspublishingservice.domain.model.NewsPost;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -24,10 +25,11 @@ class CreateNewsPostInputPortTest {
     @Mock
     private CreateNewsPostOutputPort createNewsPostOutputPort;
 
+    @DisplayName("뉴스 포스트 생성 시 권한 확인 후 NewsPostDto를 반환한다")
     @Test
-    void createNewsPostTest() {
+    void givenCreateNewsPostCommandWithValidPermission_whenCreatingNewsPost_thenReturnNewsPostDto() {
         // given
-        CreateNewsPostCommand command = new CreateNewsPostCommand(1L, "test title", "test content");
+        CreateNewsPostCommand command = new CreateNewsPostCommand(1L, 2L, "test title", "test content");
         NewsPost newsPost = NewsPost.createNewsPost(command.schoolPageId(), command.title(), command.content());
         when(createNewsPostOutputPort.save(any(NewsPost.class))).thenReturn(newsPost);
 
