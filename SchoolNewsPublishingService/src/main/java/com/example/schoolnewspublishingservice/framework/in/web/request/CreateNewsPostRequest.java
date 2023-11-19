@@ -4,12 +4,13 @@ import com.example.schoolnewspublishingservice.application.in.dto.CreateNewsPost
 
 public record CreateNewsPostRequest(
 
-        long schoolPageId,
+        Long administratorId,
+        Long schoolPageId,
         String title,
         String content
 ) {
 
     public CreateNewsPostCommand toCommand() {
-        return new CreateNewsPostCommand(schoolPageId, title, content);
+        return new CreateNewsPostCommand(administratorId, schoolPageId, title, content);
     }
 }

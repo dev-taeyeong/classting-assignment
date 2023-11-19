@@ -1,0 +1,17 @@
+version: '3.8'
+
+services:
+  mongodb:
+    image: mongo:latest
+    container_name: classting-mongodb
+    ports:
+      - "27017:27017"
+    
+  mysql:
+    image: mysql:8.0
+    container_name: classting-mysqldb
+    ports:
+      - "3306:3306"
+    environment:
+      - MYSQL_ROOT_PASSWORD=admin1234
+      - MYSQL_DATABASE=news_feed

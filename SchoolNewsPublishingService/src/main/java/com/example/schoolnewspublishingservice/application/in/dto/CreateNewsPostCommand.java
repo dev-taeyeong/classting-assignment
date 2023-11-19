@@ -2,7 +2,8 @@ package com.example.schoolnewspublishingservice.application.in.dto;
 
 public record CreateNewsPostCommand(
 
-        long schoolPageId,
+        Long administratorId,
+        Long schoolPageId,
         String title,
         String content
 ) {

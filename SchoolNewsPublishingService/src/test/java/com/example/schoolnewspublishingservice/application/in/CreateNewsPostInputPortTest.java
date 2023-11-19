@@ -27,7 +27,7 @@ class CreateNewsPostInputPortTest {
     @Test
     void createNewsPostTest() {
         // given
-        CreateNewsPostCommand command = new CreateNewsPostCommand(1L, "test newTitle", "test newContent");
+        CreateNewsPostCommand command = new CreateNewsPostCommand(1L, "test title", "test content");
         NewsPost newsPost = NewsPost.createNewsPost(command.schoolPageId(), command.title(), command.content());
         when(createNewsPostOutputPort.save(any(NewsPost.class))).thenReturn(newsPost);
 

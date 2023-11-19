@@ -11,3 +11,11 @@ spring:
 
   jpa:
     open-in-view: false
+
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+
+external:
+  school-page-management-service:
+    host: http://localhost:8080
