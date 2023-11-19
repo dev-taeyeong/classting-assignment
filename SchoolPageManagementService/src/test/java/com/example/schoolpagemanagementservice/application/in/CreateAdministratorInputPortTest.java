@@ -4,6 +4,7 @@ import com.example.schoolpagemanagementservice.application.in.dto.AdministratorD
 import com.example.schoolpagemanagementservice.application.in.dto.CreateAdministratorCommand;
 import com.example.schoolpagemanagementservice.application.out.CreateAdministratorOutputPort;
 import com.example.schoolpagemanagementservice.domain.model.Administrator;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -24,8 +25,9 @@ class CreateAdministratorInputPortTest {
     @Mock
     private CreateAdministratorOutputPort createAdministratorOutputPort;
 
+    @DisplayName("관리자 생성 시 입력값에 맞게 AdministratorDto가 반환되는지 검증")
     @Test
-    void createAdministratorTest() {
+    void givenAdministratorCreationCommand_whenCreatingAdministrator_thenReturnAdministratorDto() {
         // given
         CreateAdministratorCommand command = new CreateAdministratorCommand("test name");
         Administrator administrator = Administrator.createAdministrator(command.name());

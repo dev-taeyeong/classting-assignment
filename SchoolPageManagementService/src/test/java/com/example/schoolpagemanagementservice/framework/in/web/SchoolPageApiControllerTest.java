@@ -5,6 +5,7 @@ import com.example.schoolpagemanagementservice.application.usecase.CreateSchoolP
 import com.example.schoolpagemanagementservice.application.usecase.GetAllSchoolPagesUseCase;
 import com.example.schoolpagemanagementservice.framework.in.web.request.CreateSchoolPageRequest;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -38,8 +39,9 @@ class SchoolPageApiControllerTest {
     @Autowired
     private ObjectMapper objectMapper;
 
+    @DisplayName("학교 페이지 생성 요청 시 학교 페이지 DTO가 정상적으로 반환되는지 검증")
     @Test
-    void createSchoolPageTest() throws Exception {
+    void givenSchoolPageCreationRequest_whenCreating_thenReturnSchoolPageDto() throws Exception {
         // given
         long schoolPageId = 1L;
         long administratorId = 1L;
@@ -64,8 +66,9 @@ class SchoolPageApiControllerTest {
         then(createSchoolPageUseCase).should().createSchoolPage(request.toCommand());
     }
 
+    @DisplayName("모든 학교 페이지를 페이지네이션으로 조회 시 정상적으로 페이지 DTO 반환되는지 검증")
     @Test
-    void getAllSchoolPagesTest() throws Exception {
+    void givenPageableRequest_whenRequestingAllSchoolPages_thenReturnPagedSchoolPages() throws Exception {
         // given
         int page = 0;
         int size = 20;

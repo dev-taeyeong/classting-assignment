@@ -5,6 +5,7 @@ import com.example.schoolpagemanagementservice.application.in.dto.SchoolPageDto;
 import com.example.schoolpagemanagementservice.application.out.CreateSchoolPageOutputPort;
 import com.example.schoolpagemanagementservice.domain.model.Administrator;
 import com.example.schoolpagemanagementservice.domain.model.SchoolPage;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -28,8 +29,9 @@ class CreateSchoolPageInputPortTest {
     @Mock
     private CreateSchoolPageOutputPort createSchoolPageOutputPort;
 
+    @DisplayName("학교 페이지 생성 시 입력값에 맞게 SchoolPageDto가 반환되는지 검증")
     @Test
-    void createSchoolPageTest() {
+    void givenSchoolPageCreationCommand_whenCreatingSchoolPage_thenReturnSchoolPageDto() {
         // given
         CreateSchoolPageCommand command = new CreateSchoolPageCommand(1L, "test location", "test name");
 

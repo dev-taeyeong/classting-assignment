@@ -16,6 +16,13 @@ public class PermissionApiController {
 
     private final CheckPermissionUseCase checkPermissionUseCase;
 
+    /**
+     * 주어진 관리자가 특정 학교 페이지에 대한 접근 권한을 가지고 있는지 확인합니다.
+     *
+     * @param schoolPageId 접근 권한을 확인할 학교 페이지의 ID.
+     * @param administratorId 권한 확인을 요청하는 관리자의 ID.
+     * @return 관리자가 해당 학교 페이지에 대한 접근 권한이 잇으면 true, 없으면 false를 반환합니다.
+     */
     @GetMapping("/check")
     public ResponseEntity<Boolean> checkPermission(
             @RequestParam Long schoolPageId, @RequestParam Long administratorId) {
