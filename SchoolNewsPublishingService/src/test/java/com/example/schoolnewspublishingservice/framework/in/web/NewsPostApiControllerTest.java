@@ -3,10 +3,7 @@ package com.example.schoolnewspublishingservice.framework.in.web;
 import com.example.schoolnewspublishingservice.application.in.dto.CreateNewsPostCommand;
 import com.example.schoolnewspublishingservice.application.in.dto.NewsPostDto;
 import com.example.schoolnewspublishingservice.application.in.dto.UpdateNewsPostCommand;
-import com.example.schoolnewspublishingservice.application.usecase.CreateNewsPostUseCase;
-import com.example.schoolnewspublishingservice.application.usecase.GetAllNewsPostsUseCase;
-import com.example.schoolnewspublishingservice.application.usecase.GetNewsPostsByIdsUseCase;
-import com.example.schoolnewspublishingservice.application.usecase.UpdateNewsPostUseCase;
+import com.example.schoolnewspublishingservice.application.usecase.*;
 import com.example.schoolnewspublishingservice.framework.in.web.request.CreateNewsPostRequest;
 import com.example.schoolnewspublishingservice.framework.in.web.request.UpdateNewsPostRequest;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -51,7 +48,10 @@ class NewsPostApiControllerTest {
     @MockBean
     private UpdateNewsPostUseCase updateNewsPostUseCase;
 
-    @DisplayName("뉴스")
+    @MockBean
+    private DeleteNewsPostUseCase deleteNewsPostUseCase;
+
+    @DisplayName("뉴스 포스트를 생성한다")
     @Test
     void shouldReturnNewsPostDto_whenCreatingNewsPost() throws Exception {
         // given

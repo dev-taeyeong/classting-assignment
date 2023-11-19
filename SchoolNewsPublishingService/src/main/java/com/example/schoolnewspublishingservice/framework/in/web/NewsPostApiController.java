@@ -1,11 +1,9 @@
 package com.example.schoolnewspublishingservice.framework.in.web;
 
+import com.example.schoolnewspublishingservice.application.in.dto.DeleteNewsPostCommand;
 import com.example.schoolnewspublishingservice.application.in.dto.NewsPostDto;
 import com.example.schoolnewspublishingservice.application.in.dto.UpdateNewsPostCommand;
-import com.example.schoolnewspublishingservice.application.usecase.CreateNewsPostUseCase;
-import com.example.schoolnewspublishingservice.application.usecase.GetAllNewsPostsUseCase;
-import com.example.schoolnewspublishingservice.application.usecase.GetNewsPostsByIdsUseCase;
-import com.example.schoolnewspublishingservice.application.usecase.UpdateNewsPostUseCase;
+import com.example.schoolnewspublishingservice.application.usecase.*;
 import com.example.schoolnewspublishingservice.framework.in.web.request.CreateNewsPostRequest;
 import com.example.schoolnewspublishingservice.framework.in.web.request.UpdateNewsPostRequest;
 import lombok.RequiredArgsConstructor;
@@ -28,6 +26,7 @@ public class NewsPostApiController {
     private final GetAllNewsPostsUseCase getAllNewsPostsUseCase;
     private final GetNewsPostsByIdsUseCase getNewsPostsByIdsUseCase;
     private final UpdateNewsPostUseCase updateNewsPostUseCase;
+    private final DeleteNewsPostUseCase deleteNewsPostUseCase;
 
     @PostMapping
     public ResponseEntity<NewsPostDto> createNewsPost(@RequestBody CreateNewsPostRequest request) {
@@ -40,6 +39,14 @@ public class NewsPostApiController {
             @PageableDefault(page = 0, size = 20, sort = "id", direction = Sort.Direction.DESC) Pageable pageable) {
         Page<NewsPostDto> newsPostDtos = getAllNewsPostsUseCase.getAllNewsPost(pageable);
         return ResponseEntity.ok(newsPostDtos);
+    }
+
+    @DeleteMapping("{newsPostId}")
+    public ResponseEntity<String> deleteNewsPostById(
+            @PathVariable String newsPostId
+    ) {
+        String deletedNewsPostId = deleteNewsPostUseCase.deleteNewsPost(new DeleteNewsPostCommand(newsPostId));
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).body(deletedNewsPostId);
     }
 
     @GetMapping("/by-ids")
