@@ -92,35 +92,35 @@ $ curl http://localhost:8081/api/v1/news-posts | jq .
 - 학교 소식 삭제 (학교 관리자는 작성된 소식을 삭제할 수 있다.)
 ```bash
 # 등록된 모든 학교 소식 조회
-$ curl -X http://localhost:8081/api/v1/news-posts | jq .
+$ curl http://localhost:8081/api/v1/news-posts | jq .
 
 # '테스트 ID 1' ID를 가진 학교 소식 삭제
-$ curl -X DELETE http://localhost:8081/api/v1/news-posts/테스트 ID 1 | jq .
+$ curl -X DELETE http://localhost:8081/api/v1/news-posts/테스트%20ID%201
 
 # 학교 소식 삭제 검증
-$ curl -X http://localhost:8081/api/v1/news-posts | jq .
+$ curl http://localhost:8081/api/v1/news-posts | jq .
 ```
 
 - 학교 관리자는 작성된 소식을 수정할 수 있다.
 ```bash
 # 등록된 학교 소식 조회
-$ curl -X http://localhost:8081/api/v1/news-posts | jq .
+$ curl http://localhost:8081/api/v1/news-posts | jq .
 
-# 등록된 학교 소식 수정
-$ curl -X PUT http://localhost:8081/api/v1/news-posts/{newsPostId} \
+# '테스트 ID 5' ID를 가진 학교 소식 수정
+$ curl -X PUT http://localhost:8081/api/v1/news-posts/테스트%20ID%205 \
        -H "Content-Type: application/json" \
        -d '{"administratorId": 1, "newTitle": "새 제목", "newContent": "새 내용"}' | jq .
 
 # 학교 소식 수정 검증
-$ curl -X http://localhost:8081/api/v1/news-posts | jq .
+$ curl http://localhost:8081/api/v1/news-posts | jq .
 ```
 
 - 학생은 학교 페이지를 구독할 수 있다.
 ```bash
-# 학생의 학교 페이지 구독 목록 조회
+# ID가 1인 학생의 학교 페이지 구독 목록 조회
 $ curl http://localhost:8082/api/v1/students/1/subscriptions | jq .
 
-# 학교 페이지 구독
+# ID가 1인 학생으로 ID가 4인 학교 페이지 구독
 $ curl -X POST http://localhost:8082/api/v1/school-pages/4/subscriptions \
        -H "Content-Type: application/json" \
        -d '{"studentId": 1}' | jq .
@@ -137,10 +137,10 @@ $ curl http://localhost:8082/api/v1/students/1/subscriptions | jq .
 
 - 학생은 구독 중인 학교 페이지를 구독 취소할 수 있다.
 ```bash
-# 학생의 학교 페이지 구독 목록 조회
+# ID가 1인 학생의 학교 페이지 구독 목록 조회
 $ curl http://localhost:8082/api/v1/students/1/subscriptions | jq .
 
-# 학생의 학교 페이지 구독 취소
+# ID가 1인 학생의 ID가 4인 학교 페이지 구독 취소
 $ curl -X DELETE http://localhost:8082/api/v1/school-pages/4/subscriptions?studentId=1
 
 # 학교 페이지 구독 취소 검증
@@ -149,13 +149,14 @@ $ curl http://localhost:8082/api/v1/students/1/subscriptions | jq .
 
 - 학생은 구독 중인 학교 페이지별 소식을 볼 수 있다.
 ```bash
-# 구독 중인 학교 페이지별 소식 조회
+# ID가 1인 학생으로 구독하고 있는 ID가 1인 학교 페이지의 소식 조회
 $ curl http://localhost:8081/api/v1/news-posts/by-school-page-id/1?studentId=1 | jq .
 
+# ID가 1인 학생으로 구독하고 있는 ID가 2인 학교 페이지의 소식 조회
 $ curl http://localhost:8081/api/v1/news-posts/by-school-page-id/2?studentId=1 | jq .
 ```
 
-- 학생은 구독 중인 학교 소식을 자신의 뉴스피드에서 모아볼 수 있다.
+- 학생은 구독 중인 학교 소식을 자신의 뉴스피드에서 모아볼 수 있다. (이전 뉴스피드는 구독을 해제해도 남아있음)
 ```bash
 # 구독 중인 학교 소식을 자신의 뉴스피드에서 조회
 $ curl http://localhost:3000/api/v1/newsfeeds/by-student-id/1?page=0&size=20 | jq .

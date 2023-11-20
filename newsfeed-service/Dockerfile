@@ -18,6 +18,7 @@ WORKDIR /usr/src/app
 
 COPY --from=build /usr/src/app/dist ./dist
 COPY package*.json ./
+COPY .env ./
 RUN npm install --only=production
 
 EXPOSE 3000

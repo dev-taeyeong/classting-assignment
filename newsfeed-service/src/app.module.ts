@@ -3,6 +3,7 @@ import { NewsfeedsModule } from './newsfeeds/newsfeeds.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Newsfeed } from './newsfeeds/entities/newsfeed.entity';
 import { ClientsModule, Transport } from '@nestjs/microservices';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
   imports: [
@@ -30,6 +31,9 @@ import { ClientsModule, Transport } from '@nestjs/microservices';
         },
       },
     ]),
+    ConfigModule.forRoot({
+      isGlobal: true,
+    }),
     NewsfeedsModule
   ],
   controllers: [],

@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Newsfeed } from './entities/newsfeed.entity';
 import { Repository } from 'typeorm';
+import { ConfigService } from '@nestjs/config';
 import axios from 'axios';
 
 @Injectable()
@@ -10,10 +11,12 @@ export class NewsfeedsService {
   constructor(
     @InjectRepository(Newsfeed)
     private readonly newsfeedRepository: Repository<Newsfeed>,
+    private readonly configService: ConfigService,
   ) { }
 
   async handleNewsfeedCreated(message: any) {
-    const response = await axios.get(`http://student-subscription-service:8082/api/v1/school-pages/${message.schoolPageId}/subscribers`);
+    const baseUrl = this.configService.get<string>('STUDENT_SUBSCRIPTION_SERVICE_HOST');
+    const response = await axios.get(`${baseUrl}/api/v1/school-pages/${message.schoolPageId}/subscribers`);
 
     const newsFeeds = response.data.map(studentId => this.newsfeedRepository.create({ studentId, newsPostId: message.newsPostId }));
 
@@ -42,7 +45,10 @@ export class NewsfeedsService {
       newsPostIds: newsPostIds.join(',')
     };
 
-    const response = await axios.get("http://school-news-publishing-service:8081/api/v1/news-posts/by-ids", { params });
+    const baseUrl = this.configService.get<string>('SCHOOL_NEWS_PUBLISHING_SERVICE_HOST');
+    console.log(baseUrl);
+
+    const response = await axios.get(`${baseUrl}/api/v1/news-posts/by-ids`, { params });
 
     const newsPosts = response.data;
     const orderedNewsPosts = newsPostIds
