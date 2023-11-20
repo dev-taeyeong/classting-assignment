@@ -4,7 +4,7 @@ import { CreateNewsfeedDto } from './dto/create-newsfeed.dto';
 import { Ctx, KafkaContext, MessagePattern, Payload } from '@nestjs/microservices';
 
 
-@Controller('newsfeeds')
+@Controller('api/v1/newsfeeds')
 export class NewsfeedsController {
   constructor(private readonly newsfeedsService: NewsfeedsService) {}
 

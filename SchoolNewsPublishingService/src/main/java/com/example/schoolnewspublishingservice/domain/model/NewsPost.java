@@ -1,5 +1,6 @@
 package com.example.schoolnewspublishingservice.domain.model;
 
+import com.example.schoolnewspublishingservice.domain.model.event.SchoolNewsPublished;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -47,6 +48,10 @@ public class NewsPost {
         if (content == null || content.isBlank()) {
             throw new IllegalArgumentException("잘못된 입력입니다.");
         }
+    }
+
+    public SchoolNewsPublished createSchoolNewsPublishedEvent() {
+        return new SchoolNewsPublished(id, schoolPageId);
     }
 
     @Override

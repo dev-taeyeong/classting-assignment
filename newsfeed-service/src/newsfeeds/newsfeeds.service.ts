@@ -5,7 +5,6 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Newsfeed } from './entities/newsfeed.entity';
 import { Repository } from 'typeorm';
 import axios from 'axios';
-import { ClientKafka, MessagePattern, Payload } from '@nestjs/microservices';
 
 @Injectable()
 export class NewsfeedsService {
@@ -18,12 +17,14 @@ export class NewsfeedsService {
   async handleNewsfeedCreated(message: any) {
     console.log(message);
 
-    const params = {
-      newsPostIds: message.schoolPageId
-    };
+    const response = await axios.get(`http://student-subscription-service:8082/api/v1/school-pages/${message.schoolPageId}/subscribers`);
 
-    const response = await axios.get("http://school-news-publishing-service:8081/api/v1/news-posts/by-ids", {params});
-    console.log(response.data);
+    const data: number[] = response.data;
+
+    const newsFeeds = data.map(studentId => this.newsfeedRepository.create({ studentId, newsPostId: message.newsPostId }));
+    console.log(newsFeeds);
+
+    await this.newsfeedRepository.save(newsFeeds);
   }
 
   async create(createNewsfeedDto: CreateNewsfeedDto) {
@@ -51,12 +52,20 @@ export class NewsfeedsService {
       take: size
     });
 
+    const newsPostIds = newsfeeds.map(newsfeed => newsfeed.newsPostId);
+
     const params = {
-      newsPostIds: newsfeeds.map(newsfeed => newsfeed.newsPostId).join(',')
+      newsPostIds: newsPostIds.join(',')
     };
 
-    const response = await axios.get("http://localhost:8081/api/v1/news-posts/by-ids", {params});
-    return response.data;
+    const response = await axios.get("http://school-news-publishing-service:8081/api/v1/news-posts/by-ids", {params});
+
+    const newsPosts = response.data;
+    const orderedNewsPosts = newsPostIds
+      .filter(id => newsPosts.some(post => post.id === id))
+      .map(id => newsPosts.find(post => post.id === id));
+
+    return orderedNewsPosts;
   }
 
   remove(id: number) {
