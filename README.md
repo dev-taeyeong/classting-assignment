@@ -24,10 +24,18 @@
 
 시스템은 다음 4개의 마이크로 서비스로 구성됩니다.
 
-- 학교 페이지 관리 서비스 (`SchoolPageManagementService`)
-- 학교 소식 발행 서비스 (`SchoolNewsPublishingService`)
-- 학생 구독 관리 서비스 (`StudentSubscriptionService`)
-- 뉴스피드 서비스 (`NewsfeedService`)
+1. 학교 페이지 관리 서비스 (`SchoolPageManagementService`)
+- 기술 스택: Java 17, Spring Boot 2.7, JPA, H2
+- 통신 방식: RESTful API
+2. 학교 소식 발행 서비스 (`SchoolNewsPublishingService`)
+- 기술 스택: Java 17, Spring Boot 2.7, JPA, H2
+- 통신 방식: RESTful API, Kafka를 이용한 이벤트 기반 메시징
+3. 학생 구독 관리 서비스 (`StudentSubscriptionService`)
+- 기술 스택: Java 17, Spring Boot 2.7, MongoDB
+- 통신 방식: RESTful API
+4. 뉴스피드 서비스 (`NewsfeedService`)
+- 기술 스택: Nest.js, TypeORM, MySQL, Kafka
+- 통신 방식: RESTful API, Kafka를 이용한 이벤트 기반 메시징
 
 서비스들은 Kafka를 사용한 이벤트 기반 통신과 HTTP를 통한 동기적 방식을 혼합하여 사용합니다.
 
@@ -37,6 +45,12 @@
 - 소식 발행: 학교 관리자는 학교 관련 소식을 학교 페이지에 게시할 수 있습니다.
 - 학생 구독 관리: 학생들은 관심 있는 학교 페이지를 구독하고 구독을 취소할 수 있습니다.
 - 뉴스피드: 학생들은 자신이 구독한 학교 페이지의 소식을 뉴스피드 형태로 확인할 수 있습니다.
+
+# API 상세
+- [학교 페이지 관리 서비스](./api/school-page-management.md)
+- [학교 소식 발행 서비스](./api/school-news-publish.md)
+- [학생 구독 관리 서비스](./api/student-subscription.md)
+- [뉴스피드 서비스](./api/newsfeed.md)
 
 # 구동 방법 및 확인 절차
 
@@ -56,9 +70,16 @@ $ docker-compose down
 ## 확인 절차
 - 학교 관리자 생성
 ```bash
+# 등록된 모든 관리자 계정 조회
+$ curl http://localhost:8080/api/v1/administrators | jq .
+
+# 관리자 계정 생성
 $ curl -X POST http://localhost:8080/api/v1/administrators \
        -H "Content-Type: application/json" \
        -d '{"name": "관리자"}' | jq .
+
+# 관리자 계정 생성 검증
+$ curl http://localhost:8080/api/v1/administrators | jq .
 ```
 
 - 학교 페이지 생성 (학교 관리자는 지역, 학교명으로 학교 페이지를 생성할 수 있다.)
@@ -113,6 +134,20 @@ $ curl -X PUT http://localhost:8081/api/v1/news-posts/테스트%20ID%205 \
 
 # 학교 소식 수정 검증
 $ curl http://localhost:8081/api/v1/news-posts | jq .
+```
+
+- 학생 생성
+```bash
+# 모든 학생 조회
+$ curl http://localhost:8082/api/v1/students?page=0&size=20 | jq .
+
+# 학생 생성
+$ curl -X POST http://localhost:8082/api/v1/students \
+       -H "Content-Type: application/json" \
+       -d '{"name": "학생"}'
+
+# 학생 생성 검증
+$ curl http://localhost:8082/api/v1/students?page=0&size=20 | jq .
 ```
 
 - 학생은 학교 페이지를 구독할 수 있다.
