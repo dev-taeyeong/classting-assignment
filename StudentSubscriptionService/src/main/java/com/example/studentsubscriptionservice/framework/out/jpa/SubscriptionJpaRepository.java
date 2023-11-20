@@ -13,4 +13,6 @@ public interface SubscriptionJpaRepository extends JpaRepository<Subscription, L
     List<Subscription> findByStudentId(long studentId);
 
     List<Subscription> findBySchoolPageId(long schoolPageId);
+
+    boolean existsByStudentIdAndSchoolPageId(long studentId, long schoolPageId);
 }

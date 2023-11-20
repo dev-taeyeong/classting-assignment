@@ -37,3 +37,6 @@ spring:
 external:
   school-page-management-service:
     host: http://school-page-management-service:8080
+
+  school-news-publishing-service:
+    host: http://school-news-publishing-service:8081

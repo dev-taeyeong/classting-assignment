@@ -5,6 +5,7 @@ import com.example.studentsubscriptionservice.application.in.dto.StudentDto;
 import com.example.studentsubscriptionservice.application.usecase.CreateStudentUseCase;
 import com.example.studentsubscriptionservice.application.usecase.GetAllStudentsUseCase;
 import com.example.studentsubscriptionservice.application.usecase.GetSubscriptionSchoolPagesByStudentIdUseCase;
+import com.example.studentsubscriptionservice.application.usecase.IsSubscribedUseCase;
 import com.example.studentsubscriptionservice.framework.in.web.request.CreateStudentRequest;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
@@ -40,6 +41,9 @@ class StudentApiControllerTest {
 
     @MockBean
     private GetSubscriptionSchoolPagesByStudentIdUseCase getSubscriptionSchoolPagesByStudentIdUseCase;
+
+    @MockBean
+    private IsSubscribedUseCase isSubscribedUseCase;
 
     @Test
     void createStudentTest() throws Exception {

@@ -35,7 +35,7 @@ public class SchoolPageAdapter implements SchoolPageOutputPort {
                 .build()
                 .toUriString();
 
-        ResponseEntity<List<SchoolPageDto>> response = restTemplate.exchange(uri, HttpMethod.GET, null, new ParameterizedTypeReference<List<SchoolPageDto>>() {
+        ResponseEntity<List<SchoolPageDto>> response = restTemplate.exchange(uri, HttpMethod.GET, null, new ParameterizedTypeReference<>() {
         });
 
         if (response.getBody() == null) {
