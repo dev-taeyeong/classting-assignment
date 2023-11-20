@@ -13,6 +13,6 @@ public class SchoolPageAdapter implements SchoolPageOutputPort {
 
     @Override
     public boolean existByIdAndAdministratorId(long administratorId, long schoolPageId) {
-        return false;
+        return schoolPageJpaRepository.existsByIdAndAdministratorId(schoolPageId, administratorId);
     }
 }

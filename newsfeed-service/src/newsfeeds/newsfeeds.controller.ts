@@ -1,6 +1,8 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete, Query } from '@nestjs/common';
 import { NewsfeedsService } from './newsfeeds.service';
 import { CreateNewsfeedDto } from './dto/create-newsfeed.dto';
+import { Ctx, KafkaContext, MessagePattern, Payload } from '@nestjs/microservices';
+
 
 @Controller('newsfeeds')
 export class NewsfeedsController {
@@ -10,6 +12,11 @@ export class NewsfeedsController {
   create(@Body() createNewsfeedDto: CreateNewsfeedDto) {
     console.log(createNewsfeedDto.studentId);
     return this.newsfeedsService.create(createNewsfeedDto);
+  }
+
+  @MessagePattern('SchoolNewsPublished-topic')
+  async handleNewsfeedCreated(@Payload() message: any, @Ctx() context: KafkaContext) {
+    this.newsfeedsService.handleNewsfeedCreated(message);
   }
 
   @Get()
