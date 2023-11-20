@@ -3,6 +3,7 @@ package com.example.schoolpagemanagementservice.framework.in.web;
 import com.example.schoolpagemanagementservice.application.in.dto.SchoolPageDto;
 import com.example.schoolpagemanagementservice.application.usecase.CreateSchoolPageUseCase;
 import com.example.schoolpagemanagementservice.application.usecase.GetAllSchoolPagesUseCase;
+import com.example.schoolpagemanagementservice.application.usecase.GetSchoolPagesByIdsUseCase;
 import com.example.schoolpagemanagementservice.framework.in.web.request.CreateSchoolPageRequest;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.DisplayName;
@@ -32,6 +33,9 @@ class SchoolPageApiControllerTest {
 
     @MockBean
     private GetAllSchoolPagesUseCase getAllSchoolPagesUseCase;
+
+    @MockBean
+    private GetSchoolPagesByIdsUseCase getSchoolPagesByIdsUseCase;
 
     @Autowired
     private MockMvc mvc;

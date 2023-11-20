@@ -3,6 +3,7 @@ package com.example.schoolpagemanagementservice.framework.in.web;
 import com.example.schoolpagemanagementservice.application.in.dto.SchoolPageDto;
 import com.example.schoolpagemanagementservice.application.usecase.CreateSchoolPageUseCase;
 import com.example.schoolpagemanagementservice.application.usecase.GetAllSchoolPagesUseCase;
+import com.example.schoolpagemanagementservice.application.usecase.GetSchoolPagesByIdsUseCase;
 import com.example.schoolpagemanagementservice.framework.in.web.request.CreateSchoolPageRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -13,6 +14,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/school-pages")
 @RestController
@@ -20,6 +23,7 @@ public class SchoolPageApiController {
 
     private final CreateSchoolPageUseCase createSchoolPageUseCase;
     private final GetAllSchoolPagesUseCase getAllSchoolPagesUseCase;
+    private final GetSchoolPagesByIdsUseCase getSchoolPagesByIdsUseCase;
 
     /**
      * 학교 페이지 생성
@@ -45,5 +49,13 @@ public class SchoolPageApiController {
     public ResponseEntity<Page<SchoolPageDto>> getAllSchoolPages(
             @PageableDefault(page = 0, size = 20, sort = "id", direction = Sort.Direction.DESC) Pageable pageable) {
         return ResponseEntity.ok(getAllSchoolPagesUseCase.getSchoolPages(pageable));
+    }
+
+    @GetMapping("/by-ids")
+    public ResponseEntity<List<SchoolPageDto>> getSchoolPagesByIds(
+            @RequestParam List<Long> schoolPageIds
+    ) {
+        List<SchoolPageDto> schoolPageDtos = getSchoolPagesByIdsUseCase.getSchoolPagesByIds(schoolPageIds);
+        return ResponseEntity.ok(schoolPageDtos);
     }
 }
