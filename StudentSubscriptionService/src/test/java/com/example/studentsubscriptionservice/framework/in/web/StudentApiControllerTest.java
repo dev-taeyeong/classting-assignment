@@ -1,10 +1,10 @@
 package com.example.studentsubscriptionservice.framework.in.web;
 
+import com.example.studentsubscriptionservice.application.in.dto.SchoolPageDto;
 import com.example.studentsubscriptionservice.application.in.dto.StudentDto;
-import com.example.studentsubscriptionservice.application.in.dto.SubscriptionDto;
 import com.example.studentsubscriptionservice.application.usecase.CreateStudentUseCase;
 import com.example.studentsubscriptionservice.application.usecase.GetAllStudentsUseCase;
-import com.example.studentsubscriptionservice.application.usecase.GetAllSubscriptionsByStudentIdUseCase;
+import com.example.studentsubscriptionservice.application.usecase.GetSubscriptionSchoolPagesByStudentIdUseCase;
 import com.example.studentsubscriptionservice.framework.in.web.request.CreateStudentRequest;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
@@ -39,7 +39,7 @@ class StudentApiControllerTest {
     private GetAllStudentsUseCase getAllStudentsUseCase;
 
     @MockBean
-    private GetAllSubscriptionsByStudentIdUseCase getAllSubscriptionsByStudentIdUseCase;
+    private GetSubscriptionSchoolPagesByStudentIdUseCase getSubscriptionSchoolPagesByStudentIdUseCase;
 
     @Test
     void createStudentTest() throws Exception {
@@ -61,27 +61,30 @@ class StudentApiControllerTest {
     void getAllSubscriptionsByStudentIdTest() throws Exception {
         // given
         long studentId = 1L;
-        given(getAllSubscriptionsByStudentIdUseCase.getAllSubscriptionsByStudentId(studentId)).willReturn(List.of(
-                new SubscriptionDto(1L, 1L, 1L),
-                new SubscriptionDto(2L, 1L, 4L),
-                new SubscriptionDto(3L, 1L, 6L)
+        given(getSubscriptionSchoolPagesByStudentIdUseCase.getAllSubscriptionSchoolPagesByStudentId(studentId)).willReturn(List.of(
+                new SchoolPageDto(1L, 1L, "location1", "name1"),
+                new SchoolPageDto(2L, 2L, "location2", "name2"),
+                new SchoolPageDto(3L, 3L, "location3", "name3")
         ));
 
         // when & then
         mvc.perform(get("/api/v1/students/{studentId}/subscriptions", studentId))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].id").value(1L))
-                .andExpect(jsonPath("$[0].studentId").value(1L))
-                .andExpect(jsonPath("$[0].schoolPageId").value(1L))
+                .andExpect(jsonPath("$[0].administratorId").value(1L))
+                .andExpect(jsonPath("$[0].location").value("location1"))
+                .andExpect(jsonPath("$[0].name").value("name1"))
 
                 .andExpect(jsonPath("$[1].id").value(2L))
-                .andExpect(jsonPath("$[1].studentId").value(1L))
-                .andExpect(jsonPath("$[1].schoolPageId").value(4L))
+                .andExpect(jsonPath("$[1].administratorId").value(2L))
+                .andExpect(jsonPath("$[1].location").value("location2"))
+                .andExpect(jsonPath("$[1].name").value("name2"))
 
                 .andExpect(jsonPath("$[2].id").value(3L))
-                .andExpect(jsonPath("$[2].studentId").value(1L))
-                .andExpect(jsonPath("$[2].schoolPageId").value(6L))
+                .andExpect(jsonPath("$[2].administratorId").value(3L))
+                .andExpect(jsonPath("$[2].location").value("location3"))
+                .andExpect(jsonPath("$[2].name").value("name3"))
         ;
-        then(getAllSubscriptionsByStudentIdUseCase).should().getAllSubscriptionsByStudentId(studentId);
+        then(getSubscriptionSchoolPagesByStudentIdUseCase).should().getAllSubscriptionSchoolPagesByStudentId(studentId);
     }
 }
