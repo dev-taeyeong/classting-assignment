@@ -27,6 +27,7 @@ public class NewsPostApiController {
     private final GetNewsPostsByIdsUseCase getNewsPostsByIdsUseCase;
     private final UpdateNewsPostUseCase updateNewsPostUseCase;
     private final DeleteNewsPostUseCase deleteNewsPostUseCase;
+    private final GetNewsPostsBySchoolPageIdUseCase getNewsPostsBySchoolPageIdUseCase;
 
     /**
      * 소식을 생성합니다.
@@ -94,5 +95,20 @@ public class NewsPostApiController {
                 request.newTitle(),
                 request.newContent()));
         return ResponseEntity.ok(newsPostDto);
+    }
+
+    /**
+     * 구독중인 학교 페이지의 소식 목록 조회
+     *
+     * @param schoolPageId
+     * @param studentId
+     * @return
+     */
+    @GetMapping("/by-school-page-id/{schoolPageId}")
+    public ResponseEntity<List<NewsPostDto>> getNewsPostsBySchoolPageIdAndStudentId(
+            @PathVariable Long schoolPageId, @RequestParam Long studentId
+    ) {
+        List<NewsPostDto> newsPostDtos = getNewsPostsBySchoolPageIdUseCase.getNewsPostsBySchoolPageId(schoolPageId, studentId);
+        return ResponseEntity.ok(newsPostDtos);
     }
 }

@@ -28,3 +28,6 @@ spring:
 external:
   school-page-management-service:
     host: http://school-page-management-service:8080
+
+  student-subscription-service:
+    host: http://student-subscription-service:8082
