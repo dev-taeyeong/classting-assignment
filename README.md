@@ -47,10 +47,18 @@
 - 뉴스피드: 학생들은 자신이 구독한 학교 페이지의 소식을 뉴스피드 형태로 확인할 수 있습니다.
 
 # API 상세
-- [학교 페이지 관리 서비스](./api/school-page-management.md)
-- [학교 소식 발행 서비스](./api/school-news-publish.md)
-- [학생 구독 관리 서비스](./api/student-subscription.md)
-- [뉴스피드 서비스](./api/newsfeed.md)
+1. 학교 페이지 관리 서비스
+- API 문서: [학교 페이지 관리 API 상세](./api/school-page-management.md)
+- Swagger UI: [학교 페이지 관리 Swagger 문서](http://localhost:8080/swagger-ui/index.html)
+2. 학교 소식 발행 서비스
+- API 문서: [학교 소식 발행 API 상세](./api/school-news-publish.md)
+- Swagger UI: [학교 소식 발행 Swagger 문서](http://localhost:8081/swagger-ui/index.html)
+3. 학생 구독 관리 서비스
+- API 문서: [학생 구독 관리 API 상세](./api/student-subscription.md)
+- Swagger UI: [학교 구독 관리 Swagger 문서](http://localhost:8082/swagger-ui/index.html)
+4. 뉴스피드 서비스
+- API 문서: [뉴스피드 서비스 API 상세](./api/newsfeed.md)
+- Swagger UI: [뉴스피드 서비스 Swagger 문서](http://localhost:3000/api)
 
 # 구동 방법 및 확인 절차
 
