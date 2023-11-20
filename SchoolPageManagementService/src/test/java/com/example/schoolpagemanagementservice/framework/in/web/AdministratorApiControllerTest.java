@@ -2,6 +2,7 @@ package com.example.schoolpagemanagementservice.framework.in.web;
 
 import com.example.schoolpagemanagementservice.application.in.dto.AdministratorDto;
 import com.example.schoolpagemanagementservice.application.usecase.CreateAdministratorUseCase;
+import com.example.schoolpagemanagementservice.application.usecase.GetAllAdministratorsUseCase;
 import com.example.schoolpagemanagementservice.framework.in.web.request.CreateAdministratorRequest;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.DisplayName;
@@ -29,6 +30,9 @@ class AdministratorApiControllerTest {
 
     @MockBean
     private CreateAdministratorUseCase createAdministratorUseCase;
+
+    @MockBean
+    private GetAllAdministratorsUseCase getAllAdministratorsUseCase;
 
     @DisplayName("관리자 생성 요청 시 관리자 DTO가 반환된다")
     @Test

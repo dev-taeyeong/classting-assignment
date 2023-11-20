@@ -2,14 +2,14 @@ package com.example.schoolpagemanagementservice.framework.in.web;
 
 import com.example.schoolpagemanagementservice.application.in.dto.AdministratorDto;
 import com.example.schoolpagemanagementservice.application.usecase.CreateAdministratorUseCase;
+import com.example.schoolpagemanagementservice.application.usecase.GetAllAdministratorsUseCase;
 import com.example.schoolpagemanagementservice.framework.in.web.request.CreateAdministratorRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/administrators")
@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class AdministratorApiController {
 
     private final CreateAdministratorUseCase createAdministratorUseCase;
+    private final GetAllAdministratorsUseCase getAllAdministratorsUseCase;
 
     /**
      * 새로운 관리자 계정을 생성합니다.
@@ -31,5 +32,16 @@ public class AdministratorApiController {
     ) {
         AdministratorDto administratorDto = createAdministratorUseCase.createAdministrator(request.toCommand());
         return ResponseEntity.status(HttpStatus.CREATED).body(administratorDto);
+    }
+
+    /**
+     * 모든 관리자 데이터를 조회합니다.
+     *
+     * @return
+     */
+    @GetMapping
+    public ResponseEntity<List<AdministratorDto>> getAllAdministrators() {
+        List<AdministratorDto> administratorDtos = getAllAdministratorsUseCase.getAllAdministrators();
+        return ResponseEntity.ok(administratorDtos);
     }
 }
