@@ -35,6 +35,10 @@ public class NewsPost {
         return new NewsPost(null, schoolPageId, title, content);
     }
 
+    public static NewsPost createNewsPost(String newsPostId, long schoolPageId, String title, String content) {
+        return new NewsPost(newsPostId, schoolPageId, title, content);
+    }
+
     public void update(String newTitle, String newContent) {
         validateInput(newTitle, newContent);
         title = newTitle;

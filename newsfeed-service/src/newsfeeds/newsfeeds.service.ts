@@ -1,6 +1,4 @@
 import { Injectable } from '@nestjs/common';
-import { CreateNewsfeedDto } from './dto/create-newsfeed.dto';
-import { UpdateNewsfeedDto } from './dto/update-newsfeed.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Newsfeed } from './entities/newsfeed.entity';
 import { Repository } from 'typeorm';
@@ -12,28 +10,14 @@ export class NewsfeedsService {
   constructor(
     @InjectRepository(Newsfeed)
     private readonly newsfeedRepository: Repository<Newsfeed>,
-  ) {}
+  ) { }
 
   async handleNewsfeedCreated(message: any) {
-    console.log(message);
-
     const response = await axios.get(`http://student-subscription-service:8082/api/v1/school-pages/${message.schoolPageId}/subscribers`);
 
-    const data: number[] = response.data;
-
-    const newsFeeds = data.map(studentId => this.newsfeedRepository.create({ studentId, newsPostId: message.newsPostId }));
-    console.log(newsFeeds);
+    const newsFeeds = response.data.map(studentId => this.newsfeedRepository.create({ studentId, newsPostId: message.newsPostId }));
 
     await this.newsfeedRepository.save(newsFeeds);
-  }
-
-  async create(createNewsfeedDto: CreateNewsfeedDto) {
-    const newsFeedToSave = this.newsfeedRepository.create({
-      studentId: +createNewsfeedDto.studentId,
-      newsPostId: createNewsfeedDto.newsPostId
-    });
-    const newsFeed = await this.newsfeedRepository.save(newsFeedToSave);
-    return newsFeed;
   }
 
   async findAll() {
@@ -58,7 +42,7 @@ export class NewsfeedsService {
       newsPostIds: newsPostIds.join(',')
     };
 
-    const response = await axios.get("http://school-news-publishing-service:8081/api/v1/news-posts/by-ids", {params});
+    const response = await axios.get("http://school-news-publishing-service:8081/api/v1/news-posts/by-ids", { params });
 
     const newsPosts = response.data;
     const orderedNewsPosts = newsPostIds
@@ -70,5 +54,152 @@ export class NewsfeedsService {
 
   remove(id: number) {
     return `This action removes a #${id} newsfeed`;
+  }
+
+  async onModuleInit() {
+    this.newsfeedRepository.save(
+      [
+        this.newsfeedRepository.create(
+          {
+            id: 1,
+            studentId: 1,
+            newsPostId: "테스트 ID 1"
+          }
+        ),
+        this.newsfeedRepository.create(
+          {
+            id: 2,
+            studentId: 4,
+            newsPostId: "테스트 ID 1"
+          }
+        ),
+        this.newsfeedRepository.create(
+          {
+            id: 3,
+            studentId: 5,
+            newsPostId: "테스트 ID 1"
+          }
+        ),
+        this.newsfeedRepository.create(
+          {
+            id: 4,
+            studentId: 7,
+            newsPostId: "테스트 ID 1"
+          }
+        ),
+        this.newsfeedRepository.create(
+          {
+            id: 5,
+            studentId: 1,
+            newsPostId: "테스트 ID 2"
+          }
+        ),
+        this.newsfeedRepository.create(
+          {
+            id: 6,
+            studentId: 2,
+            newsPostId: "테스트 ID 2"
+          }
+        ),
+        this.newsfeedRepository.create(
+          {
+            id: 7,
+            studentId: 8,
+            newsPostId: "테스트 ID 2"
+          }
+        ),
+        this.newsfeedRepository.create(
+          {
+            id: 8,
+            studentId: 10,
+            newsPostId: "테스트 ID 2"
+          }
+        ),
+        this.newsfeedRepository.create(
+          {
+            id: 9,
+            studentId: 1,
+            newsPostId: "테스트 ID 3"
+          }
+        ),
+        this.newsfeedRepository.create(
+          {
+            id: 10,
+            studentId: 3,
+            newsPostId: "테스트 ID 3"
+          }
+        ),
+        this.newsfeedRepository.create(
+          {
+            id: 11,
+            studentId: 7,
+            newsPostId: "테스트 ID 3"
+          }
+        ),
+        this.newsfeedRepository.create(
+          {
+            id: 12,
+            studentId: 10,
+            newsPostId: "테스트 ID 3"
+          }
+        ),
+        this.newsfeedRepository.create(
+          {
+            id: 13,
+            studentId: 3,
+            newsPostId: "테스트 ID 4"
+          }
+        ),
+        this.newsfeedRepository.create(
+          {
+            id: 14,
+            studentId: 5,
+            newsPostId: "테스트 ID 4"
+          }
+        ),
+        this.newsfeedRepository.create(
+          {
+            id: 15,
+            studentId: 8,
+            newsPostId: "테스트 ID 4"
+          }
+        ),
+        this.newsfeedRepository.create(
+          {
+            id: 16,
+            studentId: 10,
+            newsPostId: "테스트 ID 4"
+          }
+        ),
+        this.newsfeedRepository.create(
+          {
+            id: 17,
+            studentId: 1,
+            newsPostId: "테스트 ID 5"
+          }
+        ),
+        this.newsfeedRepository.create(
+          {
+            id: 18,
+            studentId: 6,
+            newsPostId: "테스트 ID 5"
+          }
+        ),
+        this.newsfeedRepository.create(
+          {
+            id: 19,
+            studentId: 7,
+            newsPostId: "테스트 ID 5"
+          }
+        ),
+        this.newsfeedRepository.create(
+          {
+            id: 20,
+            studentId: 9,
+            newsPostId: "테스트 ID 5"
+          }
+        ),
+      ]
+    );
   }
 }
