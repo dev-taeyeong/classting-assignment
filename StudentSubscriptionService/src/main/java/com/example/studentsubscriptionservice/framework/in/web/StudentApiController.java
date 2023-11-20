@@ -1,10 +1,11 @@
 package com.example.studentsubscriptionservice.framework.in.web;
 
+import com.example.studentsubscriptionservice.application.in.dto.SchoolPageDto;
 import com.example.studentsubscriptionservice.application.in.dto.StudentDto;
-import com.example.studentsubscriptionservice.application.in.dto.SubscriptionDto;
 import com.example.studentsubscriptionservice.application.usecase.CreateStudentUseCase;
 import com.example.studentsubscriptionservice.application.usecase.GetAllStudentsUseCase;
-import com.example.studentsubscriptionservice.application.usecase.GetAllSubscriptionsByStudentIdUseCase;
+import com.example.studentsubscriptionservice.application.usecase.GetSubscriptionSchoolPagesByStudentIdUseCase;
+import com.example.studentsubscriptionservice.application.usecase.IsSubscribedUseCase;
 import com.example.studentsubscriptionservice.framework.in.web.request.CreateStudentRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -23,7 +24,8 @@ public class StudentApiController {
 
     private final CreateStudentUseCase createStudentUseCase;
     private final GetAllStudentsUseCase getAllStudentsUseCase;
-    private final GetAllSubscriptionsByStudentIdUseCase getAllSubscriptionsByStudentIdUseCase;
+    private final GetSubscriptionSchoolPagesByStudentIdUseCase getSubscriptionSchoolPagesByStudentIdUseCase;
+    private final IsSubscribedUseCase isSubscribedUseCase;
 
     /**
      * 학생 생성
@@ -51,17 +53,32 @@ public class StudentApiController {
     }
 
     /**
-     * 학생의 구독 목록 조회
+     * 학생이 구독중인 학교 페이지 목록 조회
      *
-     * @param studentId 학생 ID
-     * @return SubscriptionDto list
+     * @param studentId 조회를 위한 학생 ID
+     * @return 학생이 구독중인 학교 페이지 목록
      */
     @GetMapping("/{studentId}/subscriptions")
-    public ResponseEntity<List<SubscriptionDto>> getAllSubscriptionsByStudentId(
+    public ResponseEntity<List<SchoolPageDto>> getAllSubscriptionSchoolPagesByStudentId(
             @PathVariable Long studentId
     ) {
-        List<SubscriptionDto> subscriptionDtos =
-                getAllSubscriptionsByStudentIdUseCase.getAllSubscriptionsByStudentId(studentId);
+        List<SchoolPageDto> subscriptionDtos =
+                getSubscriptionSchoolPagesByStudentIdUseCase.getAllSubscriptionSchoolPagesByStudentId(studentId);
         return ResponseEntity.ok(subscriptionDtos);
+    }
+
+    /**
+     * 학생의 학교 페이지 구독 여부 조회
+     *
+     * @param studentId 학생 ID
+     * @param schoolPageId 학교 페이지 ID
+     * @return 구독 여부
+     */
+    @GetMapping("/{studentId}/subscription-status")
+    public ResponseEntity<Boolean> isSubscribed(
+            @PathVariable Long studentId, @RequestParam Long schoolPageId
+    ) {
+        Boolean isSubscribed = isSubscribedUseCase.isSubscribed(studentId, schoolPageId);
+        return ResponseEntity.ok(isSubscribed);
     }
 }

@@ -79,20 +79,32 @@ Request
 Response
 ```json
 [
-  {
-    "id": 1,
-    "studentId": 1,
-    "schoolPageId": 1
-  },
-  {
-    "id": 2,
-    "studentId": 1,
-    "schoolPageId": 2
-  },
-  {
-    "id": 3,
-    "studentId": 1,
-    "schoolPageId": 3
-  }    
+    {
+        "id": 3,
+        "administratorId": 3,
+        "location": "천호",
+        "name": "천호중학교"
+    },
+    {
+        "id": 4,
+        "administratorId": 4,
+        "location": "부산",
+        "name": "부산초등학교"
+    }
 ]
+```
+
+### 학생의 학교 페이지 구독 여부 조회 API
+- Endpoint: `/api/v1/students/{studentId}/subscription-status`
+- Method: `GET`
+
+Request
+- Path Paramters
+  - `studentId`: 학생 ID
+- Requset Parameters
+  - `schoolPageId`: 학교 페이지 ID
+
+Response
+```json
+false
 ```

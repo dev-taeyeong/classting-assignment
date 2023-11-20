@@ -8,4 +8,6 @@ import java.util.List;
 public interface NewsPostMongoRepository extends MongoRepository<NewsPost, String> {
 
     List<NewsPost> findByIdIn(List<String> newsPostIds);
+
+    List<NewsPost> findBySchoolPageId(long schoolPageId);
 }

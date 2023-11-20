@@ -51,6 +51,9 @@ class NewsPostApiControllerTest {
     @MockBean
     private DeleteNewsPostUseCase deleteNewsPostUseCase;
 
+    @MockBean
+    private GetNewsPostsBySchoolPageIdUseCase getNewsPostsBySchoolPageIdUseCase;
+
     @DisplayName("뉴스 포스트를 생성한다")
     @Test
     void shouldReturnNewsPostDto_whenCreatingNewsPost() throws Exception {

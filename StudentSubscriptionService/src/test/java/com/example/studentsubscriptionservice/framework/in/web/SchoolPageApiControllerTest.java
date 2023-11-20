@@ -3,6 +3,7 @@ package com.example.studentsubscriptionservice.framework.in.web;
 import com.example.studentsubscriptionservice.application.in.command.SubscribeSchoolPageCommand;
 import com.example.studentsubscriptionservice.application.in.command.UnsubscribeSchoolPageCommand;
 import com.example.studentsubscriptionservice.application.in.dto.SubscriptionDto;
+import com.example.studentsubscriptionservice.application.usecase.GetSubscribersUseCase;
 import com.example.studentsubscriptionservice.application.usecase.SubscribeSchoolPageUseCase;
 import com.example.studentsubscriptionservice.application.usecase.UnsubscribeSchoolPageUseCase;
 import com.example.studentsubscriptionservice.framework.in.web.request.SubscribeSchoolPageRequest;
@@ -35,6 +36,9 @@ class SchoolPageApiControllerTest {
 
     @MockBean
     private UnsubscribeSchoolPageUseCase unsubscribeSchoolPageUseCase;
+
+    @MockBean
+    private GetSubscribersUseCase getSubscribersUseCase;
 
     @DisplayName("학교 페이지 구독 시 구독 DTO가 정상적으로 반환된다")
     @Test

@@ -12,7 +12,7 @@ import java.util.Objects;
 @Table(
         name = "subscriptions",
         uniqueConstraints = {
-                @UniqueConstraint(columnNames = {"student_id", "school_page_id"})
+                @UniqueConstraint(columnNames = {"school_page_id", "student_id"})
         }
 )
 @Entity

@@ -4,18 +4,30 @@ server:
 spring:
   data:
     mongodb:
-      host: localhost
+      host: mongodb
       port: 27017
       database: news
       auto-index-creation: true
 
   jpa:
     open-in-view: false
+    hibernate:
+      ddl-auto: create-drop
 
   mvc:
     pathmatch:
       matching-strategy: ant_path_matcher
 
+  kafka:
+    bootstrap-servers: kafka:9092
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+      bootstrap-servers: kafka:9092
+
 external:
   school-page-management-service:
-    host: http://localhost:8080
+    host: http://school-page-management-service:8080
+
+  student-subscription-service:
+    host: http://student-subscription-service:8082

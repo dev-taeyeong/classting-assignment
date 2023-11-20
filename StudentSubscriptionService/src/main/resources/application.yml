@@ -16,13 +16,27 @@ spring:
     password:
 
   jpa:
+    hibernate:
+      ddl-auto: create-drop
     open-in-view: false
     properties:
       hibernate:
         show_sql: false
         format_sql: false
         default_batch_fetch_size: 1000
+    defer-datasource-initialization: true
+
+  sql:
+    init:
+      mode: always
 
   mvc:
     pathmatch:
       matching-strategy: ant_path_matcher
+
+external:
+  school-page-management-service:
+    host: http://school-page-management-service:8080
+
+  school-news-publishing-service:
+    host: http://school-news-publishing-service:8081

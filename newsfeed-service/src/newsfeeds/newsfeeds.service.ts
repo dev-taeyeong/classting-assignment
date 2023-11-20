@@ -1,11 +1,8 @@
 import { Injectable } from '@nestjs/common';
-import { CreateNewsfeedDto } from './dto/create-newsfeed.dto';
-import { UpdateNewsfeedDto } from './dto/update-newsfeed.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Newsfeed } from './entities/newsfeed.entity';
 import { Repository } from 'typeorm';
 import axios from 'axios';
-import { ClientKafka, MessagePattern, Payload } from '@nestjs/microservices';
 
 @Injectable()
 export class NewsfeedsService {
@@ -13,26 +10,14 @@ export class NewsfeedsService {
   constructor(
     @InjectRepository(Newsfeed)
     private readonly newsfeedRepository: Repository<Newsfeed>,
-  ) {}
+  ) { }
 
   async handleNewsfeedCreated(message: any) {
-    console.log(message);
+    const response = await axios.get(`http://student-subscription-service:8082/api/v1/school-pages/${message.schoolPageId}/subscribers`);
 
-    const params = {
-      newsPostIds: message.schoolPageId
-    };
+    const newsFeeds = response.data.map(studentId => this.newsfeedRepository.create({ studentId, newsPostId: message.newsPostId }));
 
-    const response = await axios.get("http://school-news-publishing-service:8081/api/v1/news-posts/by-ids", {params});
-    console.log(response.data);
-  }
-
-  async create(createNewsfeedDto: CreateNewsfeedDto) {
-    const newsFeedToSave = this.newsfeedRepository.create({
-      studentId: +createNewsfeedDto.studentId,
-      newsPostId: createNewsfeedDto.newsPostId
-    });
-    const newsFeed = await this.newsfeedRepository.save(newsFeedToSave);
-    return newsFeed;
+    await this.newsfeedRepository.save(newsFeeds);
   }
 
   async findAll() {
@@ -51,15 +36,170 @@ export class NewsfeedsService {
       take: size
     });
 
+    const newsPostIds = newsfeeds.map(newsfeed => newsfeed.newsPostId);
+
     const params = {
-      newsPostIds: newsfeeds.map(newsfeed => newsfeed.newsPostId).join(',')
+      newsPostIds: newsPostIds.join(',')
     };
 
-    const response = await axios.get("http://localhost:8081/api/v1/news-posts/by-ids", {params});
-    return response.data;
+    const response = await axios.get("http://school-news-publishing-service:8081/api/v1/news-posts/by-ids", { params });
+
+    const newsPosts = response.data;
+    const orderedNewsPosts = newsPostIds
+      .filter(id => newsPosts.some(post => post.id === id))
+      .map(id => newsPosts.find(post => post.id === id));
+
+    return orderedNewsPosts;
   }
 
   remove(id: number) {
     return `This action removes a #${id} newsfeed`;
+  }
+
+  async onModuleInit() {
+    this.newsfeedRepository.save(
+      [
+        this.newsfeedRepository.create(
+          {
+            id: 1,
+            studentId: 1,
+            newsPostId: "테스트 ID 1"
+          }
+        ),
+        this.newsfeedRepository.create(
+          {
+            id: 2,
+            studentId: 4,
+            newsPostId: "테스트 ID 1"
+          }
+        ),
+        this.newsfeedRepository.create(
+          {
+            id: 3,
+            studentId: 5,
+            newsPostId: "테스트 ID 1"
+          }
+        ),
+        this.newsfeedRepository.create(
+          {
+            id: 4,
+            studentId: 7,
+            newsPostId: "테스트 ID 1"
+          }
+        ),
+        this.newsfeedRepository.create(
+          {
+            id: 5,
+            studentId: 1,
+            newsPostId: "테스트 ID 2"
+          }
+        ),
+        this.newsfeedRepository.create(
+          {
+            id: 6,
+            studentId: 2,
+            newsPostId: "테스트 ID 2"
+          }
+        ),
+        this.newsfeedRepository.create(
+          {
+            id: 7,
+            studentId: 8,
+            newsPostId: "테스트 ID 2"
+          }
+        ),
+        this.newsfeedRepository.create(
+          {
+            id: 8,
+            studentId: 10,
+            newsPostId: "테스트 ID 2"
+          }
+        ),
+        this.newsfeedRepository.create(
+          {
+            id: 9,
+            studentId: 1,
+            newsPostId: "테스트 ID 3"
+          }
+        ),
+        this.newsfeedRepository.create(
+          {
+            id: 10,
+            studentId: 3,
+            newsPostId: "테스트 ID 3"
+          }
+        ),
+        this.newsfeedRepository.create(
+          {
+            id: 11,
+            studentId: 7,
+            newsPostId: "테스트 ID 3"
+          }
+        ),
+        this.newsfeedRepository.create(
+          {
+            id: 12,
+            studentId: 10,
+            newsPostId: "테스트 ID 3"
+          }
+        ),
+        this.newsfeedRepository.create(
+          {
+            id: 13,
+            studentId: 3,
+            newsPostId: "테스트 ID 4"
+          }
+        ),
+        this.newsfeedRepository.create(
+          {
+            id: 14,
+            studentId: 5,
+            newsPostId: "테스트 ID 4"
+          }
+        ),
+        this.newsfeedRepository.create(
+          {
+            id: 15,
+            studentId: 8,
+            newsPostId: "테스트 ID 4"
+          }
+        ),
+        this.newsfeedRepository.create(
+          {
+            id: 16,
+            studentId: 10,
+            newsPostId: "테스트 ID 4"
+          }
+        ),
+        this.newsfeedRepository.create(
+          {
+            id: 17,
+            studentId: 1,
+            newsPostId: "테스트 ID 5"
+          }
+        ),
+        this.newsfeedRepository.create(
+          {
+            id: 18,
+            studentId: 6,
+            newsPostId: "테스트 ID 5"
+          }
+        ),
+        this.newsfeedRepository.create(
+          {
+            id: 19,
+            studentId: 7,
+            newsPostId: "테스트 ID 5"
+          }
+        ),
+        this.newsfeedRepository.create(
+          {
+            id: 20,
+            studentId: 9,
+            newsPostId: "테스트 ID 5"
+          }
+        ),
+      ]
+    );
   }
 }
