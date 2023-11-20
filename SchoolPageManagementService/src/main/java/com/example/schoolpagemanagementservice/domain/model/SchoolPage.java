@@ -9,7 +9,10 @@ import java.util.Objects;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Table(name = "school_pages")
+@Table(
+        name = "school_pages",
+        uniqueConstraints = {@UniqueConstraint(columnNames = {"location", "name"})}
+)
 @Entity
 public class SchoolPage {
 
