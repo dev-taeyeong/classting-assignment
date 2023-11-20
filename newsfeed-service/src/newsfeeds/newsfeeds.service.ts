@@ -5,14 +5,26 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Newsfeed } from './entities/newsfeed.entity';
 import { Repository } from 'typeorm';
 import axios from 'axios';
+import { ClientKafka, MessagePattern, Payload } from '@nestjs/microservices';
 
 @Injectable()
 export class NewsfeedsService {
 
   constructor(
     @InjectRepository(Newsfeed)
-    private readonly newsfeedRepository: Repository<Newsfeed>
+    private readonly newsfeedRepository: Repository<Newsfeed>,
   ) {}
+
+  async handleNewsfeedCreated(message: any) {
+    console.log(message);
+
+    const params = {
+      newsPostIds: message.schoolPageId
+    };
+
+    const response = await axios.get("http://school-news-publishing-service:8081/api/v1/news-posts/by-ids", {params});
+    console.log(response.data);
+  }
 
   async create(createNewsfeedDto: CreateNewsfeedDto) {
     const newsFeedToSave = this.newsfeedRepository.create({

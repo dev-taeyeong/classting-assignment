@@ -2,12 +2,13 @@ import { Module } from '@nestjs/common';
 import { NewsfeedsModule } from './newsfeeds/newsfeeds.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Newsfeed } from './newsfeeds/entities/newsfeed.entity';
+import { ClientsModule, Transport } from '@nestjs/microservices';
 
 @Module({
   imports: [
     TypeOrmModule.forRoot({
       type: 'mysql',
-      host: '127.0.0.1',
+      host: 'mysql',
       port: 3306,
       username: 'root',
       password: 'admin1234',
@@ -15,6 +16,20 @@ import { Newsfeed } from './newsfeeds/entities/newsfeed.entity';
       entities: [Newsfeed],
       synchronize: true,
     }),
+    ClientsModule.register([
+      {
+        name: 'KAFKA_SERVICE',
+        transport: Transport.KAFKA,
+        options: {
+          client: {
+            brokers: ['kafka:9092'],
+          },
+          consumer: {
+            groupId: 'my_consumer'
+          }
+        },
+      },
+    ]),
     NewsfeedsModule
   ],
   controllers: [],
