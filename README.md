@@ -89,6 +89,7 @@ $ curl -X POST http://localhost:8080/api/v1/administrators \
 # 관리자 계정 생성 검증
 $ curl http://localhost:8080/api/v1/administrators | jq .
 ```
+<br/>
 
 - 학교 페이지 생성 (학교 관리자는 지역, 학교명으로 학교 페이지를 생성할 수 있다.)
 ```bash
@@ -103,6 +104,7 @@ $ curl -X POST http://localhost:8080/api/v1/school-pages \
 # 학교 페이지 생성 검증
 $ curl http://localhost:8080/api/v1/school-pages | jq .
 ```
+<br/>
 
 - 학교 소식 작성 (학교 관리자는 학교 페이지 내에 소식을 작성할 수 있다.)
 ```bash
@@ -117,6 +119,7 @@ $ curl -X POST http://localhost:8081/api/v1/news-posts \
 # 학교 소식 생성 검증
 $ curl http://localhost:8081/api/v1/news-posts | jq .
 ```
+<br/>
 
 - 학교 소식 삭제 (학교 관리자는 작성된 소식을 삭제할 수 있다.)
 ```bash
@@ -129,8 +132,9 @@ $ curl -X DELETE http://localhost:8081/api/v1/news-posts/테스트%20ID%201
 # 학교 소식 삭제 검증
 $ curl http://localhost:8081/api/v1/news-posts | jq .
 ```
+<br/>
 
-- 학교 관리자는 작성된 소식을 수정할 수 있다.
+- 학교 소식 수정 (학교 관리자는 작성된 소식을 수정할 수 있다.)
 ```bash
 # 등록된 학교 소식 조회
 $ curl http://localhost:8081/api/v1/news-posts | jq .
@@ -143,6 +147,7 @@ $ curl -X PUT http://localhost:8081/api/v1/news-posts/테스트%20ID%205 \
 # 학교 소식 수정 검증
 $ curl http://localhost:8081/api/v1/news-posts | jq .
 ```
+<br/>
 
 - 학생 생성
 ```bash
@@ -157,8 +162,9 @@ $ curl -X POST http://localhost:8082/api/v1/students \
 # 학생 생성 검증
 $ curl http://localhost:8082/api/v1/students?page=0&size=20 | jq .
 ```
+<br/>
 
-- 학생은 학교 페이지를 구독할 수 있다.
+- 학교 페이지 구독 (학생은 학교 페이지를 구독할 수 있다.)
 ```bash
 # ID가 1인 학생의 학교 페이지 구독 목록 조회
 $ curl http://localhost:8082/api/v1/students/1/subscriptions | jq .
@@ -171,14 +177,16 @@ $ curl -X POST http://localhost:8082/api/v1/school-pages/4/subscriptions \
 # 학교 페이지 구독 검증
 $ curl http://localhost:8082/api/v1/students/1/subscriptions | jq .
 ```
+<br/>
 
-- 학생은 구독 중인 학교 페이지 목록을 확인할 수 있다.
+- 구독 목록 조회 (학생은 구독 중인 학교 페이지 목록을 확인할 수 있다.)
 ```bash
 # 학생의 학교 페이지 구독 목록 조회
 $ curl http://localhost:8082/api/v1/students/1/subscriptions | jq .
 ```
+<br/>
 
-- 학생은 구독 중인 학교 페이지를 구독 취소할 수 있다.
+- 구독 취소 (학생은 구독 중인 학교 페이지를 구독 취소할 수 있다.)
 ```bash
 # ID가 1인 학생의 학교 페이지 구독 목록 조회
 $ curl http://localhost:8082/api/v1/students/1/subscriptions | jq .
@@ -189,8 +197,9 @@ $ curl -X DELETE http://localhost:8082/api/v1/school-pages/4/subscriptions?stude
 # 학교 페이지 구독 취소 검증
 $ curl http://localhost:8082/api/v1/students/1/subscriptions | jq .
 ```
+<br/>
 
-- 학생은 구독 중인 학교 페이지별 소식을 볼 수 있다.
+- 학교 페이지별 소식 조회 (학생은 구독 중인 학교 페이지별 소식을 볼 수 있다.)
 ```bash
 # ID가 1인 학생으로 구독하고 있는 ID가 1인 학교 페이지의 소식 조회
 $ curl http://localhost:8081/api/v1/news-posts/by-school-page-id/1?studentId=1 | jq .
@@ -198,8 +207,10 @@ $ curl http://localhost:8081/api/v1/news-posts/by-school-page-id/1?studentId=1 |
 # ID가 1인 학생으로 구독하고 있는 ID가 2인 학교 페이지의 소식 조회
 $ curl http://localhost:8081/api/v1/news-posts/by-school-page-id/2?studentId=1 | jq .
 ```
+<br/>
 
-- 학생은 구독 중인 학교 소식을 자신의 뉴스피드에서 모아볼 수 있다. (이전 뉴스피드는 구독을 해제해도 남아있음)
+- 뉴스피드 조회 (학생은 구독 중인 학교 소식을 자신의 뉴스피드에서 모아볼 수 있다.)
+- 이전 뉴스피드는 구독을 해제해도 남아있음
 ```bash
 # 구독 중인 학교 소식을 자신의 뉴스피드에서 조회
 $ curl http://localhost:3000/api/v1/newsfeeds/by-student-id/1?page=0&size=20 | jq .
